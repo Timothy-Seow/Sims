@@ -1,7 +1,7 @@
 package sims.needs;
 
 public class Needs {
-    private final String name;
+    // private final String name;
     private int energy;
     private int social;
     private int hygiene;
@@ -9,9 +9,9 @@ public class Needs {
     private int hunger;
     private int fun;
 
-    public Needs(String name, int energy, int social, int hygiene, int bladder, int hunger, int fun){
+    public Needs(int energy, int social, int hygiene, int bladder, int hunger, int fun){
         // CONSTRUCTOR
-        this.name = name;
+        // this.name = name;
         this.energy = Math.max(0, Math.min(100, energy)); // combines this.energy = energy and clamps the value between 0 and 100
         this.social = Math.max(0, Math.min(100, social)); // combines this.social = social and clamps the value between 0 and 100
         this.hygiene = Math.max(0, Math.min(100, hygiene)); // combines this.hygiene = hygiene and clamps the value between 0 and 100
@@ -23,9 +23,9 @@ public class Needs {
     // clamping is done in the constructor and in the setter (defensive programming)
     // protects the initial state and protects future states
 
-    public String getName(){
-        return name;
-    }
+    // public String getName(){
+    //    return name;
+    //}
 
 
     public int getEnergy(){
