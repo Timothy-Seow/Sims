@@ -43,6 +43,24 @@ public class Gameplay {
         while(gameplay){
 
             // Gameplay starts here
+
+            System.out.println("Where do you want your Sim to go first?");
+            System.out.println("1. Go to the kitchen");
+            System.out.println("2. Go to the bedroom");
+            System.out.println("3. Go to the living room");
+            System.out.println("4. Go to the washroom");
+            System.out.println("5. Go to work");
+
+            String locationChoice = scanner.nextLine();
+
+            switch(locationChoice){
+
+
+
+
+            }
+
+
             System.out.println("What would you want your Sim to do?");
             System.out.println("1. View Needs");
             System.out.println("2. Sleep");
@@ -70,6 +88,16 @@ public class Gameplay {
 
               //case ...
             }
+
+
+
+
+
+
+
+
+
+
 
             if (action != null){
                 action.execute(currentSim);   // interface only runs when the 'action' variable has a value
