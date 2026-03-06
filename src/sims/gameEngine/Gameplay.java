@@ -24,8 +24,7 @@ public class Gameplay {
 
         Scanner scanner = new Scanner(System.in);  // instantiate the scanner class
         SimProfile currentSim = null;
-        SimAction action = null;
-
+        Location currentLocation = null; // currentLocation variable has not been assigned at the start of the game
 
 
         while(currentSim == null){
@@ -45,11 +44,6 @@ public class Gameplay {
                     System.out.println("Please enter a valid number: ");
             }
         }
-
-
-        // current location is null at the start of the game because the Sim has not been assigned a location yet
-        Location currentLocation = null;
-
 
 
         // everything above this line is to settle everything before the player commences
