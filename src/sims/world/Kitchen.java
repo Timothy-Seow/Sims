@@ -30,7 +30,7 @@ public class Kitchen extends Location{
         System.out.println("What do you want " + currentSim.getName() + " to do?");
         String actionChoice = scanner.nextLine();
 
-        switch(actionChoice){
+        switch(actionChoice) {
             case "1":
 
                 currentSim.showNeeds();
@@ -44,17 +44,17 @@ public class Kitchen extends Location{
             case "3":
 
                 currentSim.moveTo(Gameplay.bedroom);
-                return false; // exits the current room loop
+                return true;
 
             case "4":
 
                 currentSim.moveTo(Gameplay.livingroom);
-                return false; // exits the current room loop
+                return true;
 
             case "5":
 
                 currentSim.moveTo(Gameplay.washroom);
-                return false; // exits the current room loop
+                return true;
 
             case "6":
 
@@ -71,6 +71,6 @@ public class Kitchen extends Location{
                 System.out.println("I don't think your Sim can do that. Pick something else!");
                 return true; // stays within the current room loop
 
-            }
+        }
     }
 }

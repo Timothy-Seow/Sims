@@ -121,16 +121,24 @@ public class Gameplay {
                 continue;
             }
 
+
             // This loop will run as long as the player is in the location, it will break when the player chooses to return to the navigation menu
             boolean inLocation = true;
             while (inLocation) {
+
+                //update location when the Sim moves
+                currentLocation = currentSim.getRoom();
+
+
                 System.out.println("\n-- " + currentLocation.getLocationName() + " Actions --");
+
                 // Show location options
                 currentLocation.showOptions();
 
-
                 // Location actions are handled in their respective classes, this is to avoid a long switch case in the gameplay class.
                 inLocation = currentLocation.handleLocActions(currentSim, scanner);
+
+
 
                 // Checking the needs decay - this does it after every action
                 //currentSim.getNeeds().decay();

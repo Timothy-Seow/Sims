@@ -14,7 +14,6 @@ public class Washroom extends Location{
     public void showOptions(){
 
         System.out.println(" ");
-        System.out.println(" ");
         System.out.println("1. View Needs");
         System.out.println("2. Take a steamy bath");
         System.out.println("3. Take a rinse");
@@ -56,17 +55,17 @@ public class Washroom extends Location{
             case "5":
 
                 currentSim.moveTo(Gameplay.bedroom);
-                return false;
+                return true;
 
             case "6":
 
                 currentSim.moveTo(Gameplay.kitchen);
-                return false;
+                return true;
 
             case "7":
 
                 currentSim.moveTo(Gameplay.livingroom);
-                return false;
+                return true;
 
             case "8":
 

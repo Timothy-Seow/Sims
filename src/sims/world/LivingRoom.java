@@ -55,17 +55,17 @@ public class LivingRoom extends Location{
             case "5":
 
                 currentSim.moveTo(Gameplay.bedroom);
-                return false;
+                return true;
 
             case "6":
 
                 currentSim.moveTo(Gameplay.kitchen);
-                return false;
+                return true;
 
             case "7":
 
                 currentSim.moveTo(Gameplay.washroom);
-                return false;
+                return true;
 
             case "8":
 
