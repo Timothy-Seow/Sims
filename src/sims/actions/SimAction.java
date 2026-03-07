@@ -4,5 +4,6 @@ import sims.entity.SimProfile;
 
 // INTERFACE
 public interface SimAction {
-    void execute(SimProfile currentSim);  // any action class must have this method
+    public void execute(SimProfile currentSim);  // any action class must have this method
+    public String getDescription();  // description for display
 }

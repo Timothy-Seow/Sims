@@ -31,4 +31,9 @@ public class Sleep implements SimAction{
                 sleepType = ""; // declare sleepType to be empty so the loop starts again
         }
     }
+
+    @Override
+    public String getDescription(){
+        return "Sleep";
+    }
 }

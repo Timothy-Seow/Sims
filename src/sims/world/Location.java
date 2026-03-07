@@ -1,5 +1,6 @@
 package sims.world;
 
+import sims.actions.SimAction;
 import sims.entity.*;
 import java.util.Scanner;
 

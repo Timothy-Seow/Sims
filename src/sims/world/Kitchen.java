@@ -1,18 +1,23 @@
 package sims.world;
 
 import sims.gameEngine.*;
+
 import java.util.Scanner;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
+
+import sims.food.*;
 import sims.entity.*;
-import sims.actions.*;
 
 public class Kitchen extends Location{
+    protected FoodMenu foodMenu;
+
     public Kitchen(){
         super("Kitchen");
+        this.foodMenu = new FoodMenu();
     }
 
     @Override
     public void showOptions(){
-
         System.out.println(" ");
         System.out.println("1. View Needs");
         System.out.println("2. Eat something");
@@ -21,7 +26,6 @@ public class Kitchen extends Location{
         System.out.println("5. Go to the washroom");
         System.out.println("6. Go to work");
         System.out.println("x. Terminate the game");
-
     }
 
     @Override
@@ -39,7 +43,8 @@ public class Kitchen extends Location{
             case "2":
 
                 // eat action
-                return true; // stays within the current room loop
+                return foodMenu.selectFood(currentSim, scanner); //go to food menu for selection
+                //return true; // stays within the current room loop
 
             case "3":
 
