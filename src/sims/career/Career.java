@@ -1,52 +1,55 @@
 package sims.career;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
 // PARENT CLASS
 
-public abstract class Career{
-    protected String title;
-    protected int currentLevel = 0;
-    protected double income;
-    protected int energyCost;
-    protected int workHours;
-    protected List<String> ProgressionList;
+public class Career{
 
-    public Career(String title, int currentLevel, double income, int energyCost, int workHours){
-        this.title = title;
-        this.currentLevel = currentLevel;
-        this.income = income;
-        this.energyCost = energyCost;
-        this.workHours = workHours;
-        this.ProgressionList = new ArrayList<String>(); // this creates an empty dynamic array that stores Strings
+    private String title;
+    private String sector;
+    private int salary;
+
+    public Career(){
+        title = "Unemployed";
+        sector = "Unemployed";
+        salary = 0;
     }
 
+    public Career(String title, String sector, int salary) {
+        this.title = title;
+        this.sector = sector;
+        this.salary = salary;
+    }
 
-    // Getters listed below
-
-    public String getTitle(){
+    public String getTitle()
+    {
         return title;
     }
 
-    public int getCurrentLevel(){
-        return currentLevel;
+    public String getSector()
+    {
+        return sector;
     }
 
-    public double getIncome(){
-        return income;
+    public int getSalary() {
+        return salary;
     }
 
-    public int getEnergyCost(){
-        return energyCost;
+    public void setTitle(String title)
+    {
+        this.title = title;
     }
 
-    public int getWorkHours(){
-        return workHours;
+    public void setSector(String sector)
+    {
+        this.sector = sector;
     }
 
-    public List<String> getProgressionList(){
-        return ProgressionList;
+    public void setSalary(int salary)
+    {
+        this.salary = salary;
     }
-
 }
