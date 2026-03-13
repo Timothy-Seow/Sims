@@ -1,0 +1,59 @@
+package sims.world;
+
+import sims.actions.Activity;
+import sims.entity.Sim;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class HomeLocation extends Loc{
+    private List<HomeUpgrade> upgradeList = new ArrayList<>();
+    private Home home;
+
+    public HomeLocation(String locName, Home home) {
+        super(locName);
+        this.home = home;
+    }
+
+    public List<Activity> checkUpgrade(String homeLocation) {
+        List<Activity> unUpgraded = new ArrayList<>();
+        for(HomeUpgrade upgrade : upgradeList) {
+            if(upgrade.getUpgrade() == true)
+            {
+                addActivity(upgrade.getActivity());
+            }
+            else
+            {
+                unUpgraded.add(upgrade.getActivity());
+            }
+        }
+
+        return unUpgraded;
+    }
+
+    public void addUpgrade(HomeUpgrade upgrade)
+    {
+        upgradeList.add(upgrade);
+    }
+
+    public List<HomeUpgrade> getUpgradeList() {
+        return upgradeList;
+    }
+
+    public Home getHome()
+    {
+        return home;
+    }
+
+    @Override
+    public void moveTo(Sim sim) {
+        sim.setCurrentLocation(this);
+    }
+    public void setHome(Home home)
+    {
+        this.home = home;
+    }
+}
+
