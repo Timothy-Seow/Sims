@@ -2,27 +2,20 @@ package sims.entity;
 
 import sims.needs.Needs;
 import sims.career.Career;
-import sims.world.Home;
-import sims.world.Loc;
-import java.util.HashMap;
-import java.util.Map;
+import sims.world.Location;
 
-public class SimProfile {
+public abstract class SimProfile {
 
     // PARENT CLASS
     private final String name;
     private final Needs needs;
-    private final int UUID;
     /* encapsulation, child classes cannot see the Needs class so only SimProfile has access to
     the Needs class. This prevents the child classes from tampering with the Needs class.*/
     private Career career;
-    private Home home;
-    private Loc currentLocation;
+    private Location room;
 
-
-    public SimProfile(String name, Career career, Needs customNeeds, int UUID){
+    public SimProfile(String name, Career career, Needs customNeeds){
         this.name = name;
-        this.UUID = UUID;
         this.career = career;
         this.needs = customNeeds;
 
@@ -32,32 +25,12 @@ public class SimProfile {
         return name; // returns the name of the current Sim
     }
 
-    public int getUUID(){
-        return UUID;
-    }
-
     public Career getCareer(){
         return career;
     }
 
     public void setCareer(Career career){
         this.career = career;
-    }
-
-    public Loc getLocation(){
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(Loc currentLocation){
-        this.currentLocation = currentLocation;
-    }
-
-    public Home getHome(){
-        return home;
-    }
-
-    public void setHome(Home home){
-        this.home = home;
     }
 
     public Needs getNeeds(){
@@ -75,31 +48,14 @@ public class SimProfile {
         System.out.println(" ");
     }
 
-    public void setNeeds(String needName, int value) {
-        switch (needName.toLowerCase()) {
-            case "energy":
-                needs.setEnergy(needs.getEnergy() + value);
-                break;
-            case "social":
-                needs.setSocial(needs.getSocial() + value);
-                break;
-            case "hygiene":
-                needs.setHygiene(needs.getHygiene() + value);
-                break;
-            case "bladder":
-                needs.setBladder(needs.getBladder() + value);
-                break;
-            case "hunger":
-                needs.setHunger(needs.getHunger() + value);
-                break;
-            case "fun":
-                needs.setFun(needs.getFun() + value);
-                break;
-            default:
-                System.out.println("Invalid need: " + needName);
-        }
+    public void moveTo(Location room){
+        this.room = room;
+        System.out.println(name + " has moved to the " + room.getLocationName());
     }
 
+    public Location getRoom(){
+        return room;
+    }
 
 
 }
