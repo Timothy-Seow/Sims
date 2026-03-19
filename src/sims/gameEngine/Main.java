@@ -3,12 +3,14 @@ package sims.gameEngine;
 import sims.actions.Activity;
 import sims.career.Career;
 import sims.entity.Sim;
+import sims.needs.need;
 import sims.world.Home;
 import sims.world.HomeLocation;
 import sims.world.HomeUpgrade;
 import sims.world.OutsideLocation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -109,6 +111,14 @@ public class Main {
         david.setCareer(music);
 
 
+        HashMap<String, need> needDict = new HashMap<>();
+        needDict.put("Energy", new need());
+        needDict.put("Social", new need());
+        needDict.put("Hygiene", new need());
+        needDict.put("Hunger", new need());
+        needDict.put("Fun", new need());
+        needDict.put("Bladder", new need());
+        dave.setNeeds(needDict);
 
 
         //adding sim to list
