@@ -13,6 +13,12 @@ public class need {
         this.threshold = 30;
     }
 
+    public need(double rate)
+    {
+        value = 80;
+        decayRate = rate;
+    }
+
     //specific value
     public need(int value, int decayRate)
     {
