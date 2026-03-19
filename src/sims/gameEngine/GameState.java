@@ -311,7 +311,7 @@ public class GameState {
     {
         System.out.println(sim.getName() + "'s Stats");
         for (Map.Entry<String, need> entry : sim.getNeeds().entrySet()) {
-            System.out.println(entry.getKey() + " : " + (entry.getValue().getValue()) + "/100");
+            System.out.println(entry.getKey() + " : " + (String.format("%.2f", entry.getValue().getValue())) + "/100");
         }
     }
 
