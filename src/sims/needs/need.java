@@ -3,7 +3,7 @@ package sims.needs;
 public class need {
     private double value;
     private double decayRate;
-    private int threshold;
+    private double threshold;
 
     //default
     public need()
@@ -17,13 +17,15 @@ public class need {
     {
         value = 80;
         decayRate = rate;
+        threshold = 30;
     }
 
     //specific value
-    public need(int value, int decayRate)
+    public need(int value, int decayRate, double threshold)
     {
         this.value = value;
         this.decayRate = decayRate;
+        this.threshold = threshold;
     }
 
     public double getValue() {
