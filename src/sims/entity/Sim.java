@@ -43,7 +43,12 @@ public class Sim {
     }
 
     public void updateNeeds(String need, double value) {
-        needDict.get(need).setValue(value);
+        System.out.println(activityEnd);
+        if(need != "Salary")
+        {
+            needDict.get(need).setValue(value);
+        }
+
     }
 
     public void setNeeds(Map<String, need> needDict){
@@ -76,6 +81,11 @@ public class Sim {
         this.career = career;
     }
 
+    public void setActivityEnd(int duration, int time)
+    {
+        activityEnd = time + duration;
+    }
+
     public void autoPlay(String need, int time) {
 
         for (HomeLocation homeloc : home.getHomeLocation())
@@ -98,25 +108,19 @@ public class Sim {
     public void performDecay(String need, Sim currentSim, int time)
     {
 
-        for (Map.Entry<String, need> entry : needDict.entrySet())
-        {
-            if(currentSim == this)
-            {
-                if(entry.getKey() != need)
-                {
-                    entry.getValue().performDecay();
-                }
-            }
-            else
-            {
 
-                //System.out.println("Current Sim: " + this.getName() + "\nCurrent Need: " + entry.getKey() + ": " + entry.getValue().getValue() + "\nCurrent Time : " + time + "\nActivity end time : " + activityEnd);
-                if(entry.getValue().performDecay() && time > activityEnd)
-                {
-                    autoPlay(entry.getKey(), time);
+            for (Map.Entry<String, need> entry : needDict.entrySet()) {
+                if (currentSim == this) {
+                    if (entry.getKey() != need) {
+                        entry.getValue().performDecay();
+                    }
+                } else {
+                    //System.out.println("Current Sim: " + this.getName() + "\nCurrent Need: " + entry.getKey() + ": " + entry.getValue().getValue() + "\nCurrent Time : " + time + "\nActivity end time : " + activityEnd);
+                    if (entry.getValue().performDecay() && time > activityEnd) {
+                        autoPlay(entry.getKey(), time);
+                    }
                 }
             }
-        }
 
     }
 }
