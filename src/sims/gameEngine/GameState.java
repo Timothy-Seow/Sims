@@ -157,13 +157,11 @@ public class GameState {
                 }
             }
         }
-        if (activityList != null) {
-            for (int i = 0; i < activityList.size(); i++) {
-                System.out.print("[" + (i + 2) + "] " + activityList.get(i).getName() + " - " + activityList.get(i).getImpactedNeed() + " + " + activityList.get(i).getValue() + "\n");
-            }
+        for (int i = 0; i < activityList.size(); i++) {
+            System.out.print("[" + (i + 2) + "] " + activityList.get(i).getName() + " - " + activityList.get(i).getImpactedNeed() + " + " + activityList.get(i).getValue() + "\n");
         }
         int count = activityList.size() + 2;
-        if (upgradeOption.size() > 0) {
+        if (!upgradeOption.isEmpty()) {
             System.out.println("\nPurchase Upgrades to unlock activities!");
             for (HomeUpgrade option : upgradeOption) {
                 System.out.println("[" + (count) + "] " + "Purchase " + option.getName() + " ( $" + option.getPrice() + " ) " + " to unlock \n" + option.getActivity().getName() + " : " + option.getActivity().getImpactedNeed() + " + " + option.getActivity().getValue() + "\n");
