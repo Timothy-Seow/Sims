@@ -16,6 +16,7 @@ public class Sim {
     private final int UUID;
     private Career career;
     private int age;
+    private int activityEnd = -1;
     //simStats
     //relationship map
     private Map<String, need> needDict = new HashMap<>();
@@ -76,7 +77,7 @@ public class Sim {
         this.career = career;
     }
 
-    public void autoPlay(String need) {
+    public void autoPlay(String need, int time) {
 
         for (HomeLocation homeloc : home.getHomeLocation())
         {
@@ -86,39 +87,37 @@ public class Sim {
                 {
                     homeloc.moveTo(this);
                     activity.performActivity(this);
-
-                    System.out.println(this.getName() + "Performed : " + activity.getName());
+                    activityEnd = time + activity.getDuration();
+                    System.out.println(this.getName() + "Performed : " + activity.getName() + " at world time : " + time + ". activity end time : " + activityEnd) ;
+                    return;
                 }
             }
 
         }
     }
 
-    public void performDecay(int duration, String need, Sim currentSim)
+    public void performDecay(String need, Sim currentSim, int time)
     {
-        for(Map.Entry<String , need> entry : needDict.entrySet())
+
+        for (Map.Entry<String, need> entry : needDict.entrySet())
         {
             if(currentSim == this)
             {
                 if(entry.getKey() != need)
                 {
-                    for (int i = 0; i< duration; i++)
-                    {
-                        entry.getValue().performDecay();
-                    }
+                    entry.getValue().performDecay();
                 }
             }
             else
             {
-                for (int i =0;i < duration; i++)
-                {
-                    if(entry.getValue().performDecay())
-                    {
-                        autoPlay(entry.getKey());
-                    }
-                }
 
+                //System.out.println("Current Sim: " + this.getName() + "\nCurrent Need: " + entry.getKey() + ": " + entry.getValue().getValue() + "\nCurrent Time : " + time + "\nActivity end time : " + activityEnd);
+                if(entry.getValue().performDecay() && time > activityEnd)
+                {
+                    autoPlay(entry.getKey(), time);
+                }
             }
         }
+
     }
 }
