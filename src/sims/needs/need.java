@@ -47,13 +47,6 @@ public class need {
     public boolean performDecay()
     {
         setValue(-(decayRate));
-        if (value < threshold)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return value < threshold;
     }
 }
