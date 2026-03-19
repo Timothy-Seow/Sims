@@ -31,6 +31,12 @@ public class GameState {
         addLocation(new OutsideLocation("IT Office", "Title", "Developer"));
         addLocation(new OutsideLocation("Server Room", "Sector", "IT"));
         addLocation(new OutsideLocation("Studio Room", "Sector", "Media"));
+
+        OutsideLocation work = new OutsideLocation("Office", "Title", "Developer");
+        Activity workActivity = new Activity("Work", (8 * 60), "Salary", 0);
+        work.addActivity(workActivity);
+
+        addLocation(work);
     }
 
     private Sim currentSim;
@@ -168,19 +174,27 @@ public class GameState {
             }
         }
         for (int i = 0; i < activityList.size(); i++) {
-            System.out.print("[" + (i + 2) + "] " + activityList.get(i).getName() + " - " + activityList.get(i).getImpactedNeed() + " + " + activityList.get(i).getValue() + "\n");
+            Activity activity = activityList.get(i);
+            if(activity.getImpactedNeed() == "Salary")
+            {
+                System.out.println("[" + (i + 2) + "] " + activity.getName() + " - " + activity.getImpactedNeed() + " : " + getStringTime(activity.getDuration()) + " : $" + currentSim.getCareer().getSalary());
+            }
+            else
+            {
+                System.out.println("[" + (i + 2) + "] " + activity.getName() + " - " + activity.getImpactedNeed() + " :  " + getStringTime(activity.getDuration()) + " - " + activity.getValue() + " Stats");
+            }
         }
         int count = activityList.size() + 2;
         if (!upgradeOption.isEmpty()) {
-            System.out.println("\nPurchase Upgrades to unlock activities!");
+            System.out.println("\n----------Purchase Upgrades to unlock activities!----------");
             for (HomeUpgrade option : upgradeOption) {
-                System.out.println("[" + (count) + "] " + "Purchase " + option.getName() + " ( $" + option.getPrice() + " ) " + " to unlock \n" + option.getActivity().getName() + " : " + option.getActivity().getImpactedNeed() + " + " + option.getActivity().getValue() + "\n");
+                System.out.println("[" + (count) + "] " + "Purchase " + option.getName() + " ( $" + option.getPrice() + " ) " + " to unlock \n- " + option.getActivity().getName() + " : " + option.getActivity().getImpactedNeed() + " + " + option.getActivity().getValue() + " Stats");
                 count += 1;
             }
         }
 
         System.out.println("[" + (activityList.size()+upgradeOption.size()+2) + "] Exit to main menu");
-        int choice = readInt("Input : ", activityList.size() + upgradeOption.size() + 2);
+        int choice = readInt("\nInput : ", activityList.size() + upgradeOption.size() + 2);
 
         if(choice == 1)
         {
@@ -191,14 +205,6 @@ public class GameState {
             //execute activity list action
             Activity selectedActivity = activityList.get(choice - 2);
             selectedActivity.performActivity(currentSim);
-
-            decayLoop(selectedActivity.getDuration(), selectedActivity.getImpactedNeed());
-            for(Sim sim : simList)
-            {
-                /*
-                sim.performDecay(selectedActivity.getDuration(), selectedActivity.getImpactedNeed(), currentSim);
-            */
-            }
 
             decayLoop(selectedActivity.getDuration(), selectedActivity.getImpactedNeed());
 
@@ -319,26 +325,44 @@ public class GameState {
     {
         String test = String.format("%02d:%02d", hours,minutes);
         System.out.println("Current Time: " + test);
+        System.out.println("Int time : " + getIntTime());
     }
 
 
     public void decayLoop (int duration, String need)
     {
-        for(int i = 0; i < duration; i ++)
-        {
-            for(Sim sim : simList)
-            {
-                updateTime();
-                sim.performDecay(need, currentSim, getIntTime());
+            for (int i = 0; i < duration; i++) {
+                for (Sim sim : simList) {
+                    updateTime();
+                    sim.performDecay(need, currentSim, getIntTime());
+                }
             }
-        }
+
     }
 
     public int getIntTime()
     {
-            return (days * 24) + (hours * 24) + (minutes);
+            return (hours * 60) + (minutes);
     }
 
+    public String getStringTime(int minutes)
+    {
+        int hour;
+        int day;
+        if(minutes > 60)
+        {
+           hour = minutes / 60;
+           minutes = minutes % 60;
+           if(hour > 24)
+           {
+               day = hour / 24;
+               hour = hour % 24;
+               return String.format("%02d Day : %02d Hours : %02d Minutes", day, hour, minutes);
+           }
+           return String.format("%02d Hours : %02d Minutes",hour, minutes);
+        }
+        return String.format("%02d Minutes", minutes);
+    }
     public void updateTime()
     {
 
