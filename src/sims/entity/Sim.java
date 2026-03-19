@@ -1,8 +1,10 @@
 package sims.entity;
 
+import sims.actions.Activity;
 import sims.career.Career;
 import sims.needs.need;
 import sims.world.Home;
+import sims.world.HomeLocation;
 import sims.world.Loc;
 
 import java.util.HashMap;
@@ -40,8 +42,12 @@ public class Sim {
         return needDict;
     }
 
-    public void setNeeds(String need, int value) {
+    public void updateNeeds(String need, double value) {
         needDict.get(need).setValue(value);
+    }
+
+    public void setNeeds(Map<String, need> needDict){
+        this.needDict = needDict;
     }
 
     public Loc getLocation() {
@@ -68,5 +74,57 @@ public class Sim {
     public void setCareer(Career career)
     {
         this.career = career;
+    }
+
+    public void autoPlay(String need) {
+
+        for (HomeLocation homeloc : home.getHomeLocation())
+        {
+            for(Activity activity : homeloc.getActivity())
+            {
+                if (activity.getImpactedNeed() == need)
+                {
+                    homeloc.moveTo(this);
+                    activity.performActivity(this);
+
+                    System.out.println(this.getName() + "Performed : " + activity.getName());
+                }
+            }
+
+        }
+    }
+
+    public void performDecay(int duration, String need, Sim currentSim)
+    {
+        String impactedNeed = "";
+        if(currentSim == this)
+        {
+            impactedNeed = need;//hunger
+        }
+
+        for(Map.Entry<String , need> entry : needDict.entrySet())
+        {
+            if(currentSim == this)
+            {
+                if(entry.getKey() != need)
+                {
+                    for (int i = 0; i< duration; i++)
+                    {
+                        entry.getValue().performDecay();
+                    }
+                }
+            }
+            else
+            {
+                for (int i =0;i < duration; i++)
+                {
+                    if(entry.getValue().performDecay())
+                    {
+                        autoPlay(entry.getKey());
+                    }
+                }
+
+            }
+        }
     }
 }
