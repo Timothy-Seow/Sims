@@ -1,14 +1,16 @@
 package sims.needs;
 
 public class need {
-    private int value;
-    private int decayRate;
+    private double value;
+    private double decayRate;
+    private int threshold;
 
     //default
     public need()
     {
         this.value = 80;
-        this.decayRate = 10;
+        this.decayRate = 0.5;
+        this.threshold = 30;
     }
 
     //specific value
@@ -18,15 +20,15 @@ public class need {
         this.decayRate = decayRate;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public int getDecayRate() {
+    public double getDecayRate() {
         return decayRate;
     }
 
-    public void setValue(int modify) {
+    public void setValue(Double modify) {
         if (modify + this.value >= 100)
         {
             this.value = 100;
@@ -38,6 +40,20 @@ public class need {
         else
         {
             this.value += modify;
+        }
+    }
+
+
+    public boolean performDecay()
+    {
+        setValue(-(decayRate));
+        if (value < threshold)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
