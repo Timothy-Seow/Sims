@@ -3,8 +3,11 @@ package sims.gameEngine;
 import sims.actions.Activity;
 import sims.career.Career;
 import sims.entity.Sim;
+import sims.needs.need;
 import sims.world.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +17,11 @@ public class GameState {
 
     private int gameState = 0;
     private boolean gameRunning = true;
+    private int year = 2026;
+    private int month = 1;
+    private int days = 1;
+    private int hours = 0;
+    private int minutes = 0;
 
     private Sim currentSim;
     private List<Sim> simList = new ArrayList<>();
@@ -123,11 +131,6 @@ public class GameState {
         simList.add(newSim);
         currentSim = newSim;
         gameState = 3;
-
-        //create house
-        //create career
-        //create sim with house and career
-
     }
 
     public void showActionMenu() {
@@ -136,6 +139,9 @@ public class GameState {
         } else {
             System.out.println("\nYour current location is " + currentSim.getLocation().getName());
         }
+
+        showTime();
+        showStats(currentSim);
 
         System.out.println("\n-------------Please choose action for SIM--------------");
         System.out.println("\n[1] Move Location");
@@ -176,6 +182,13 @@ public class GameState {
         {
             //execute activity list action
             Activity selectedActivity = activityList.get(choice - 2);
+            selectedActivity.performActivity(currentSim);
+            updateTime(selectedActivity.getDuration());
+            for(Sim sim : simList)
+            {
+                sim.performDecay(selectedActivity.getDuration(), selectedActivity.getImpactedNeed(), currentSim);
+            }
+
         }
         else if(choice <= activityList.size() + upgradeOption.size() + 1)
         {
@@ -266,7 +279,6 @@ public class GameState {
                 System.out.println(prompt);
                 continue;
             }
-
             int value = scanner.nextInt();
             scanner.nextLine();
 
@@ -282,6 +294,41 @@ public class GameState {
     public String readString(String prompt) {
         System.out.println(prompt);
         return scanner.nextLine();
+    }
+
+    public void showStats(Sim sim)
+    {
+        System.out.println(sim.getName() + "'s Stats");
+        for (Map.Entry<String, need> entry : sim.getNeeds().entrySet()) {
+            System.out.println(entry.getKey() + " : " + (entry.getValue().getValue()) + "/100");
+        }
+    }
+
+    public void showTime()
+    {
+        String time = String.format("%02d-%02d-%04d %02d:%02d", days,month, year, hours, minutes);
+        System.out.println("Current Time: " + time);
+    }
+
+    public void updateTime(int duration)
+    {
+        // Add minutes
+        minutes += duration;
+        // Carry over to hours
+        hours += minutes / 60;
+        minutes = minutes % 60;
+
+        // Carry over to days
+        days += hours / 24;
+        hours = hours % 24;
+
+        // Carry over to months (assuming 31 days per month for simplicity)
+        month += days / 31;
+        days = days % 31;
+
+        // Carry over to years
+        year += month / 12;
+        month = (month % 12 == 0) ? 12 : month % 12;
     }
 
     public void endGame()
