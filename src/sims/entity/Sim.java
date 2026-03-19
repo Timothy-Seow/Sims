@@ -28,7 +28,6 @@ public class Sim {
         this.name = name;
         this.UUID = UUID;
         this.age = age;
-        this.needDict.put("Hunger", new need(80, 10));
     }
 
     public String getName() {
