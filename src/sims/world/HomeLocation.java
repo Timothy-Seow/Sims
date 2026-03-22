@@ -32,10 +32,33 @@ public class HomeLocation extends Loc{
         return home;
     }
 
+    public List<Sim> getLocSimList()
+    {
+        return home.getLocSimList();
+    }
+
+    public void removeSim(Sim sim)
+    {
+        for(Sim test : home.getLocSimList())
+        {
+            System.out.println("Home list Before : " + test.getName());
+        }
+        home.removeSim(sim);
+        for(Sim test : home.getLocSimList())
+        {
+            System.out.println("Home list after : " + test.getName());
+        }
+    }
+
     @Override
     public void moveTo(Sim sim) {
         sim.setCurrentLocation(this);
+        if(!home.getLocSimList().contains(sim))
+        {
+            home.addSim(sim);
+        }
     }
+
     public void setHome(Home home)
     {
         this.home = home;
