@@ -2,19 +2,41 @@ package sims.actions;
 
 import sims.entity.Sim;
 
+import java.util.List;
+
 public class Activity {
-    private String name;
-    private int duration;
+    private final String name;
+    private final int duration;
     private final String impactedNeed;
     private final int value;
+    private final double cost;
 
     public Activity(String name, int duration, String impactedNeed, int value){
         this.name = name;
         this.duration = duration;
         this.impactedNeed = impactedNeed;
         this.value = value;
+        cost = 0;
     }
 
+
+    public Activity(String name, int duration, String impactedNeed, int value, double cost){
+        this.name = name;
+        this.duration = duration;
+        this.impactedNeed = impactedNeed;
+        this.value = value;
+        this.cost = cost;
+    }
+
+    public double getCost()
+    {
+        return cost;
+    }
+
+    public void gainXP()
+    {
+
+    }
     public String getImpactedNeed() {
         return impactedNeed;
     }
