@@ -14,7 +14,7 @@ import java.util.List;
  * and define movement behavior through the abstract {@link #moveTo(Sim)} method.
  * Subclasses should implement specific movement logic depending on the type of location.</p>
  */
-public abstract class Loc {
+public abstract class Loc implements Location{
     /** The name of the location. */
     private String name;
 
