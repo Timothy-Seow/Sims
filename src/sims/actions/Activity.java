@@ -76,15 +76,6 @@ public class Activity {
     }
 
     /**
-     * Placeholder method for awarding experience points (XP) to a Sim
-     * when performing this activity. Currently not implemented.
-     */
-    public void gainXP()
-    {
-
-    }
-
-    /**
      * Returns the need impacted by this activity.
      *
      * @return the impacted need (e.g., Hunger, Energy)
