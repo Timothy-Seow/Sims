@@ -1,6 +1,7 @@
 package sims.entity;
 
 import sims.actions.Activity;
+import sims.actions.SkillManager;
 import sims.career.Career;
 import sims.needs.need;
 import sims.world.Home;
@@ -9,7 +10,6 @@ import sims.world.Loc;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Represents a Sim character in the Sims world.
@@ -52,6 +52,12 @@ public class Sim {
     /** The relationships this Sim has with other Sims, keyed by UUID. */
     private Map<Integer, Relationship> relationshipMap = new HashMap<>();
 
+    private Map<String, SkillManager> skillMap = new HashMap<>();
+
+    public void setSkill(Map<String, SkillManager> skillMap)
+    {
+        this.skillMap = skillMap;
+    }
 
     /**
      * Constructs a new {@code Sim} with the specified name, UUID, and age.
@@ -113,6 +119,10 @@ public class Sim {
         bank -= cost;
     }
 
+    public void addBank(double value)
+    {
+        bank += value;
+    }
     /**
      * Adds a relationship to this Sim.
      *
@@ -140,18 +150,7 @@ public class Sim {
      */
     public void updateNeeds(String need, double value) {
         System.out.println(activityEnd);
-        if(need != "Salary")
-        {
             needDict.get(need).setValue(value);
-        }
-        else
-        {
-            System.out.println("Bank previous : " + bank);
-            bank += career.getSalary()+career.getBonus();
-            career.earnXP();
-            System.out.println("Bank after : " + bank);
-        }
-
     }
 
     /**
@@ -219,6 +218,10 @@ public class Sim {
         activityEnd = time + duration;
     }
 
+    public Map<String, SkillManager> getSkillMap()
+    {
+        return skillMap;
+    }
 
     /**
      * Automatically performs an activity that satisfies a given need.
