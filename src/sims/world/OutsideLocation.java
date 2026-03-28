@@ -14,10 +14,7 @@ import java.util.HashMap;
  * <p>This class manages Sims moving into the outside location and provides
  * access to its comparison and requirement properties.</p>
  */
-public class OutsideLocation extends Loc{
-
-    /** A comparison condition associated with this outside location. */
-    private String comparison;
+public class OutsideLocation extends Loc implements Location{
 
     /** A requirement condition associated with this outside location. */
     private String requirement;
@@ -27,13 +24,11 @@ public class OutsideLocation extends Loc{
      * comparison, and requirement.
      *
      * @param name        the name of the outside location
-     * @param comparison  the comparison condition for this location
      * @param requirement the requirement condition for this location
      */
-    public OutsideLocation(String name, String comparison, String requirement)
+    public OutsideLocation(String name, String requirement)
     {
         super(name);
-        this.comparison = comparison;
         this.requirement = requirement;
     }
 
@@ -54,15 +49,6 @@ public class OutsideLocation extends Loc{
         }
     }
 
-    /**
-     * Returns the comparison condition associated with this location.
-     *
-     * @return the comparison string
-     */
-    public String getComparison()
-    {
-        return comparison;
-    }
 
     /**
      * Returns the requirement condition associated with this location.
