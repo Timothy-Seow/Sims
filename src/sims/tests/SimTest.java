@@ -37,6 +37,10 @@ public class SimTest {
         otherSim = SimFactory.createSim("other", 1, 30, otherHome, artist);
     }
 
+    /**
+     * Tests the Sim constructor.
+     * Verifies that name, UUID, age, activity end time, bank balance, needs, and relationships are initialized correctly.
+     */
     @Test
     public void testConstructor() {
         assertEquals("test", testSim.getName());
@@ -48,6 +52,10 @@ public class SimTest {
         assertNotNull(testSim.getRelationshipMap()); // Should be initialized as empty HashMap
     }
 
+    /**
+     * Tests the getter methods for Sim properties.
+     * Ensures that name, UUID, age, activity end, bank, needs, and relationships are correctly retrieved.
+     */
     @Test
     public void testGetters() {
         assertEquals("other", otherSim.getName());
@@ -59,6 +67,10 @@ public class SimTest {
         assertNotNull(otherSim.getRelationshipMap());
     }
 
+    /**
+     * Tests the setCareer method.
+     * Verifies that the Sim's career can be updated correctly.
+     */
     @Test
     public void testSetCareer() {
         Career newCareer = new Career("Medical", 8000);
@@ -66,11 +78,19 @@ public class SimTest {
         assertEquals(8000, testSim.getCareer().getSalary());
     }
 
+    /**
+     * Tests the initial bank balance.
+     * Ensures that the Sim starts with the default bank balance of 500.
+     */
     @Test
     public void testBankInitialization() {
         assertEquals(500.0, testSim.getBank(), 0.001);
     }
 
+    /**
+     * Tests the updateBank method.
+     * Verifies that bank balance can be decreased (spending) or increased (earning).
+     */
     @Test
     public void testUpdateBank() {
         double initialBank = testSim.getBank();
@@ -81,6 +101,10 @@ public class SimTest {
         assertEquals(initialBank - 50.0, testSim.getBank(), 0.001);
     }
 
+    /**
+     * Tests the updateNeeds method with regular updates.
+     * Verifies that need values are updated correctly and capped at 100.
+     */
     @Test
     public void testUpdateNeedsRegular() {
         double initialHunger = testSim.getNeeds().get("Hunger").getValue();
@@ -88,6 +112,10 @@ public class SimTest {
         assertEquals(Math.min(100.0, initialHunger + 10.0), testSim.getNeeds().get("Hunger").getValue(), 0.001);
     }
 
+    /**
+     * Tests the setCurrentLocation method.
+     * Ensures that the Sim's current location can be updated.
+     */
     @Test
     public void testSetCurrentLocation() {
         HomeLocation newLocation = new HomeLocation("Kitchen", newHome);
@@ -95,6 +123,10 @@ public class SimTest {
         assertEquals(newLocation, testSim.getLocation());
     }
 
+    /**
+     * Tests the setHome method.
+     * Verifies that the Sim's home can be changed.
+     */
     @Test
     public void testSetHome() {
         Home newHome = new Home("New Home");
@@ -102,17 +134,29 @@ public class SimTest {
         assertEquals(newHome, testSim.getHome());
     }
 
+    /**
+     * Tests the initial activity end time.
+     * Ensures that activity end is initialized to -1 (no activity).
+     */
     @Test
     public void testActivityEndInitialization() {
         assertEquals(-1, testSim.getActivityEnd());
     }
 
+    /**
+     * Tests the setActivityEnd method.
+     * Verifies that activity end time is calculated correctly as current time plus duration.
+     */
     @Test
     public void testSetActivityEnd() {
         testSim.setActivityEnd(60, 100); // Duration 60, current time 100
         assertEquals(160, testSim.getActivityEnd()); // 100 + 60
     }
 
+    /**
+     * Tests the performDecay method for the current Sim.
+     * Verifies that decay is applied to all needs except the excluded one.
+     */
     @Test
     public void testPerformDecayCurrentSim() {
         // For current sim, decay should be applied to all needs except the excluded one
@@ -127,6 +171,10 @@ public class SimTest {
         assertTrue(testSim.getNeeds().get("Energy").getValue() < initialEnergy);
     }
 
+    /**
+     * Tests the performDecay method triggering autoplay for other Sims.
+     * Ensures that when a need becomes critical for a non-current Sim, autoplay is triggered.
+     */
     @Test
     public void testPerformDecayTriggersAutoplay() {
         // For other sim, decay should trigger autoplay if need is critical and sim is not busy

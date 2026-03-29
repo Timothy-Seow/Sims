@@ -28,6 +28,10 @@ public class ActivityTest {
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
+    /**
+     * Tests the constructor for an Activity with no cost.
+     * Verifies that the name, duration, impacted need, value, and cost are set correctly.
+     */
     @Test
     public void testConstructorNoCost() {
         assertEquals("Eat", eatNoCost.getName());
@@ -37,6 +41,10 @@ public class ActivityTest {
         assertEquals(0.0, eatNoCost.getCost(), 0.001);
     }
 
+    /**
+     * Tests the constructor for an Activity with a cost.
+     * Verifies that the name, duration, impacted need, value, and cost are set correctly.
+     */
     @Test
     public void testConstructorWithCost() {
         assertEquals("Shop", ShopWithCost.getName());
@@ -46,36 +54,60 @@ public class ActivityTest {
         assertEquals(50.0, ShopWithCost.getCost(), 0.001);
     }
 
+    /**
+     * Tests the getName method.
+     * Ensures that the correct activity names are returned.
+     */
     @Test
     public void testGetName() {
         assertEquals("Eat", eatNoCost.getName());
         assertEquals("Shop", ShopWithCost.getName());
     }
 
+    /**
+     * Tests the getDuration method.
+     * Ensures that the correct activity durations are returned.
+     */
     @Test
     public void testGetDuration() {
         assertEquals(30, eatNoCost.getDuration());
         assertEquals(60, ShopWithCost.getDuration());
     }
 
+    /**
+     * Tests the getImpactedNeed method.
+     * Ensures that the correct impacted needs are returned.
+     */
     @Test
     public void testGetImpactedNeed() {
         assertEquals("Hunger", eatNoCost.getImpactedNeed());
         assertEquals("Fun", ShopWithCost.getImpactedNeed());
     }
 
+    /**
+     * Tests the getValue method.
+     * Ensures that the correct activity values are returned.
+     */
     @Test
     public void testGetValue() {
         assertEquals(20, eatNoCost.getValue());
         assertEquals(10, ShopWithCost.getValue());
     }
 
+    /**
+     * Tests the getCost method.
+     * Ensures that the correct activity costs are returned.
+     */
     @Test
     public void testGetCost() {
         assertEquals(0.0, eatNoCost.getCost(), 0.001);
         assertEquals(50.0, ShopWithCost.getCost(), 0.001);
     }
 
+    /**
+     * Tests the performActivity method.
+     * Verifies that performing an activity correctly updates the Sim's needs based on the activity's value and the Sim's skill level.
+     */
     @Test
     public void testPerformActivity() {
         // Get Initial hunger value

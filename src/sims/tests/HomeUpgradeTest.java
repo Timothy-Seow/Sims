@@ -17,6 +17,10 @@ public class HomeUpgradeTest {
         testUpgrade = new HomeUpgrade("Kitchen", "Stove", 500, testActivity);
     }
 
+    /**
+     * Tests the HomeUpgrade constructor and getters.
+     * Verifies that the HomeUpgrade is initialized correctly with the provided details.
+     */
     @Test
     public void testConstructor() {
         assertEquals("Kitchen", testUpgrade.getLocation());
@@ -26,21 +30,37 @@ public class HomeUpgradeTest {
         assertFalse(testUpgrade.getUpgrade());
     }
 
+    /**
+     * Tests the getUpgrade method.
+     * Verifies that the upgrade state is correctly returned.
+     */
     @Test
     public void testGetUpgrade() {
         assertFalse(testUpgrade.getUpgrade());
     }
 
+    /**
+     * Tests the getName method.
+     * Verifies that the upgrade name is correctly returned.
+     */
     @Test
     public void testGetName() {
         assertEquals("Stove", testUpgrade.getName());
     }
 
+    /**
+     * Tests the getPrice method.
+     * Verifies that the upgrade price is correctly returned.
+     */
     @Test
     public void testGetPrice() {
         assertEquals(500, testUpgrade.getPrice());
     }
 
+    /**
+     * Tests the purchaseUpgrade method.
+     * Verifies that purchasing the upgrade changes its state to purchased.
+     */
     @Test
     public void testPurchaseUpgrade() {
         assertFalse(testUpgrade.getUpgrade());
@@ -48,16 +68,28 @@ public class HomeUpgradeTest {
         assertTrue(testUpgrade.getUpgrade());
     }
 
+    /**
+    * Tests the getLocation method.
+    * Verifies that the upgrade location is correctly returned.
+    */
     @Test
     public void testGetLocation() {
         assertEquals("Kitchen", testUpgrade.getLocation());
     }
 
+    /**
+    * Tests the getActivity method.
+    * Verifies that the associated activity is correctly returned.
+    */
     @Test
     public void testGetActivity() {
         assertEquals(testActivity, testUpgrade.getActivity());
     }
 
+    /**
+    * Tests multiple purchase calls.
+    * Verifies that calling purchaseUpgrade multiple times does not change the state after the first purchase.
+    */
     @Test
     public void testMultiplePurchaseCalls() {
         assertFalse(testUpgrade.getUpgrade());

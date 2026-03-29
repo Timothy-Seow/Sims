@@ -38,6 +38,10 @@ public class RelationshipTest {
         otherSim.addRelationship(testSim.getUUID(), newRelationship);
     }
 
+    /**
+     * Tests the constructor of Relationship.
+     * Verifies that friendship level starts at 0 and both Sims are correctly associated.
+     */
     @Test
     public void testConstructor() {
         assertEquals(0, newRelationship.getFriendshipLevel());
@@ -45,11 +49,19 @@ public class RelationshipTest {
         assertEquals(otherSim, newRelationship.getOtherSim(testSim));
     }
 
+    /**
+     * Tests the getFriendshipLevel method.
+     * Ensures that the initial friendship level is 0.
+     */
     @Test
     public void testGetFriendshipLevel() {
         assertEquals(0, newRelationship.getFriendshipLevel());
     }
 
+    /**
+     * Tests the increaseFriendship method.
+     * Verifies that friendship increases and levels up after reaching 100 XP.
+     */
     @Test
     public void testIncreaseFriendship() {
         // Initial state
@@ -66,6 +78,10 @@ public class RelationshipTest {
         assertEquals(1, newRelationship.getFriendshipLevel());
     }
 
+    /**
+     * Tests the increaseFriendship method with modulo operation.
+     * Ensures that level increases correctly when XP exceeds 100 multiple times.
+     */
     @Test
     public void testIncreaseFriendshipModulo() {
         // Increase friendship multiple times to test modulo
@@ -77,6 +93,10 @@ public class RelationshipTest {
         assertEquals(2, newRelationship.getFriendshipLevel());
     }
 
+    /**
+     * Tests the getOtherSim method.
+     * Verifies that the method correctly returns the other Sim in the relationship.
+     */
     @Test
     public void testGetOtherSim() {
         // Test getting other sim from testSim
@@ -86,6 +106,10 @@ public class RelationshipTest {
         assertEquals(testSim, newRelationship.getOtherSim(otherSim));
     }
 
+    /**
+     * Tests the increaseFriendship method at boundary conditions.
+     * Ensures that friendship levels up exactly when reaching 100 XP.
+     */
     @Test
     public void testIncreaseFriendshipBoundary() {
         // Test exactly at 100 XP
@@ -98,6 +122,10 @@ public class RelationshipTest {
         assertEquals(1, newRelationship.getFriendshipLevel());
     }
 
+    /**
+     * Tests the symmetry of the relationship.
+     * Verifies that the relationship works identically from both Sims' perspectives.
+     */
     @Test
     public void testRelationshipSymmetry() {
         // Test that the relationship works both ways

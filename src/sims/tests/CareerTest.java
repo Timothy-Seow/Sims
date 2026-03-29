@@ -16,24 +16,40 @@ public class CareerTest {
         parameterizedCareer = new Career("Technology", 5000);
     }
 
+    /**
+     * Tests the default constructor.
+     * Verifies that sector is "Unemployed" and salary is 0.
+     */
     @Test
     public void testDefaultConstructor() {
         assertEquals("Unemployed", defaultCareer.getSector());
         assertEquals(0, defaultCareer.getSalary());
     }
 
+    /**
+     * Tests the parameterized constructor.
+     * Verifies that sector and salary are set correctly.
+     */
     @Test
     public void testParameterizedConstructor() {
         assertEquals("Technology", parameterizedCareer.getSector());
         assertEquals(5000, parameterizedCareer.getSalary());
     }
 
+    /**
+     * Tests the getLevel method.
+     * Ensures that initial level is 1 for both careers.
+     */
     @Test
     public void testGetLevel() {
         assertEquals(1, defaultCareer.getLevel());
         assertEquals(1, parameterizedCareer.getLevel());
     }
 
+    /**
+     * Tests the getBonus method.
+     * Verifies bonus calculation based on salary and level.
+     */
     @Test
     public void testGetBonus() {
         // Default career: salary 0, level 1 -> bonus = 0 * 0.01 = 0
@@ -43,6 +59,10 @@ public class CareerTest {
         assertEquals(50.0, parameterizedCareer.getBonus(), 0.001);
     }
 
+    /**
+     * Tests the earnXP method.
+     * Verifies that earning XP increases level after reaching 100 XP.
+     */
     @Test
     public void testEarnXP() {
         // Initial state
@@ -61,6 +81,10 @@ public class CareerTest {
         assertEquals(2, parameterizedCareer.getLevel());
     }
 
+    /**
+    * Tests earning XP with modulo operation.
+    * Ensures that level increases correctly when XP exceeds 100 multiple times.
+    */
     @Test
     public void testEarnXPModulo() {
         // Earn XP multiple times to test modulo
@@ -72,6 +96,10 @@ public class CareerTest {
         assertEquals(3, parameterizedCareer.getLevel()); // Started at 1, +2 = 3
     }
 
+    /**
+    * Tests salary and bonus increase with higher level.
+    * Verifies that leveling up increases salary and affects bonus calculation.
+    */     
     @Test
     public void testGetIncreasedSalaryAndBonusWithHigherLevel() {
         // Increase level to 2
@@ -86,24 +114,40 @@ public class CareerTest {
         assertEquals(102.0, parameterizedCareer.getBonus(), 0.001); // 5000 * (2/100) = 100
     }
 
+    /**
+     * Tests the getSector method.
+     * Ensures correct sector retrieval.
+     */
     @Test
     public void testGetSector() {
         assertEquals("Unemployed", defaultCareer.getSector());
         assertEquals("Technology", parameterizedCareer.getSector());
     }
 
+    /**
+     * Tests the getSalary method.
+     * Verifies correct salary retrieval.
+     */
     @Test
     public void testGetSalary() {
         assertEquals(0, defaultCareer.getSalary());
         assertEquals(5000, parameterizedCareer.getSalary());
     }
-
+    
+    /**
+     * Tests the setSector method.
+     * Ensures that sector can be updated correctly.
+     */
     @Test
     public void testSetSector() {
         defaultCareer.setSector("Food Service");
         assertEquals("Food Service", defaultCareer.getSector());
     }
 
+    /**
+     * Tests the setSalary method and bonus recalculation.
+     * Verifies that salary can be updated and bonus recalculates correctly.
+     */
     @Test
     public void testSetSalaryAndBonus() {
         defaultCareer.setSalary(3000);
@@ -111,6 +155,10 @@ public class CareerTest {
         assertEquals(30.0, defaultCareer.getBonus(), 0.001); // 3000 * 0.01 = 30
     }
 
+    /**
+     * Tests the getBonus method with zero salary.
+     * Ensures that bonus is zero when salary is zero, regardless of level.
+     */
     @Test
     public void testBonusCalculationWithZeroSalary() {
         defaultCareer.setSalary(0);

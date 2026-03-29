@@ -34,6 +34,10 @@ public class HomeLocationTest {
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
+    /**
+     * Tests the HomeLocation constructor and getters.
+     * Verifies that the HomeLocation is initialized correctly with the provided name and home.
+     */
     @Test
     public void testConstructor() {
         assertEquals("Kitchen", testHomeLocation.getName());
@@ -42,6 +46,10 @@ public class HomeLocationTest {
         assertTrue(testHomeLocation.getUpgradeList().isEmpty());
     }
 
+    /**
+     * Tests the addUpgrade and getUpgradeList methods.
+     * Verifies that upgrades can be added to the HomeLocation and retrieved correctly.
+     */
     @Test
     public void testAddUpgrade() {
         testHomeLocation.addUpgrade(testUpgrade);
@@ -50,6 +58,10 @@ public class HomeLocationTest {
         assertEquals(testUpgrade, upgrades.get(0));
     }
 
+    /**
+     * Tests the getUpgradeList method.
+     * Verifies that the correct list of upgrades is returned.
+     */
     @Test
     public void testGetUpgradeList() {
         assertNotNull(testHomeLocation.getUpgradeList());
@@ -58,11 +70,19 @@ public class HomeLocationTest {
         assertEquals(1, testHomeLocation.getUpgradeList().size());
     }
 
+    /**
+    * Tests the getHome method.
+    * Verifies that the correct Home reference is returned.
+    */
     @Test
     public void testGetHome() {
         assertEquals(testHome, testHomeLocation.getHome());
     }
 
+    /**
+     * Tests the getLocSimList method.
+     * Verifies that the list of Sims in the HomeLocation is retrieved correctly.
+     */
     @Test
     public void testGetLocSimListDelegatesToHome() {
         // HomeLocation.getLocSimList() delegates to home.getLocSimList()
@@ -72,6 +92,10 @@ public class HomeLocationTest {
         assertTrue(testHomeLocation.getLocSimList().contains(testSim));
     }
 
+    /**
+    * Tests the removeSim method.
+    * Verifies that removing a Sim from the HomeLocation correctly updates the list of Sims in the Home.
+    */
     @Test
     public void testRemoveSimDelegatesToHome() {
         testHome.addSim(testSim);
@@ -82,6 +106,10 @@ public class HomeLocationTest {
         assertFalse(testHomeLocation.getLocSimList().contains(testSim));
     }
 
+    /**
+    * Tests the setHome method.
+    * Verifies that the Home reference can be set and retrieved correctly.
+    */
     @Test
     public void testSetHome() {
         Home newHome = new Home("New Home");
@@ -89,6 +117,10 @@ public class HomeLocationTest {
         assertEquals(newHome, testHomeLocation.getHome());
     }
 
+    /**
+     * Tests inherited location functionality.
+     * Verifies that the HomeLocation inherits the correct functionality from its parent class.
+     */
     @Test
     public void testInheritsLocFunctionality() {
         // Test inherited activity functionality
@@ -100,6 +132,10 @@ public class HomeLocationTest {
         assertEquals(testActivity, testHomeLocation.getActivity().get(0));
     }
 
+    /**
+     * Tests multiple upgrades.
+     * Verifies that multiple upgrades can be added and retrieved correctly.
+     */
     @Test
     public void testMultipleUpgrades() {
         HomeUpgrade upgrade1 = new HomeUpgrade("Kitchen", "Fridge", 300, new Activity("Eat", 30, "Hunger", 20));
@@ -116,6 +152,10 @@ public class HomeLocationTest {
         assertTrue(upgrades.contains(upgrade2));
     }
 
+    /**
+     * Tests the details of each upgrade.
+     * Verifies that the details of each upgrade are correct.
+     */
     @Test
     public void testUpgradeDetails() {
         testHomeLocation.addUpgrade(testUpgrade);

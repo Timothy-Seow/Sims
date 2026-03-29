@@ -26,6 +26,10 @@ public class OutsideLocationTest {
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
+    /**
+     * Tests the constructor of OutsideLocation.
+     * Verifies that name, requirement are set correctly, and sim list is initialized empty.
+     */
     @Test
     public void testConstructor() {
         assertEquals("Park", testOutsideLocation.getName());
@@ -34,11 +38,19 @@ public class OutsideLocationTest {
         assertTrue(testOutsideLocation.getLocSimList().isEmpty());
     }
 
+    /**
+     * Tests the getRequirement method.
+     * Ensures that the correct requirement is returned.
+     */
     @Test
     public void testGetRequirement() {
         assertEquals("None", testOutsideLocation.getRequirement());
     }
 
+    /**
+     * Tests the moveTo method.
+     * Verifies that a Sim is moved from one location to the OutsideLocation correctly.
+     */
     @Test
     public void testMoveTo() {
         // Create initial location for sim
@@ -54,6 +66,10 @@ public class OutsideLocationTest {
         assertFalse(initialLocation.getLocSimList().contains(testSim));
     }
 
+    /**
+     * Tests the moveTo method when Sim is already in the location.
+     * Ensures that moving a Sim already in the location works without issues.
+     */
     @Test
     public void testMoveToAlreadyInLocation() {
         // Add sim to location first
@@ -67,6 +83,10 @@ public class OutsideLocationTest {
         assertTrue(testOutsideLocation.getLocSimList().contains(testSim));
     }
 
+    /**
+     * Tests that OutsideLocation inherits functionality from Loc.
+     * Verifies inherited methods for activities and sim management work correctly.
+     */
     @Test
     public void testInheritsLocFunctionality() {
         // Test inherited activity functionality
@@ -81,6 +101,10 @@ public class OutsideLocationTest {
         assertFalse(testOutsideLocation.getLocSimList().contains(testSim));
     }
 
+    /**
+     * Tests OutsideLocation with different requirements.
+     * Verifies that various requirements can be set and retrieved correctly.
+     */
     @Test
     public void testDifferentRequirements() {
         OutsideLocation beach = new OutsideLocation("Beach", "Sunscreen");
@@ -90,6 +114,10 @@ public class OutsideLocationTest {
         assertEquals("Jacket", mountain.getRequirement());
     }
 
+    /**
+     * Tests moving multiple Sims to the OutsideLocation.
+     * Verifies that multiple Sims can be moved correctly, updating both source and destination locations.
+     */
     @Test
     public void testMoveMultipleSims() {
         OutsideLocation sourceLocation = new OutsideLocation("Home", "None");
@@ -120,6 +148,10 @@ public class OutsideLocationTest {
         assertEquals(testOutsideLocation, otherSim.getLocation());
     }
 
+    /**
+     * Tests changing the location name.
+     * Verifies that the setName method updates the location name correctly.
+     */
     @Test
     public void testLocationNameChange() {
         testOutsideLocation.setName("Garden");

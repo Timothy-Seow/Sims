@@ -32,6 +32,10 @@ public class LocTest {
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
+    /**
+     * Tests the HomeLocation constructor and getters.
+     * Verifies that the HomeLocation is initialized correctly with the provided name and home.
+     */
     @Test
     public void testLocConstructor() {
         assertEquals("Kitchen", homeLocation.getName());
@@ -41,6 +45,10 @@ public class LocTest {
         assertTrue(homeLocation.getLocSimList().isEmpty());
     }
 
+    /**
+     * Tests the addActivity and getActivity methods.
+     * Verifies that activities can be added to the HomeLocation and retrieved correctly.
+     */
     @Test
     public void testAddAndGetActivity() {
         homeLocation.addActivity(testActivity);
@@ -49,6 +57,10 @@ public class LocTest {
         assertEquals(testActivity, activities.get(0));
     }
 
+    /**
+     * Tests the addSim, removeSim, and getLocSimList methods.
+     * Verifies that Sims can be added to the HomeLocation and retrieved correctly.
+     */
     @Test
     public void testAddAndRemoveSim() {
         homeLocation.getHome().addSim(testSim);
@@ -58,17 +70,29 @@ public class LocTest {
         assertFalse(homeLocation.getHome().getLocSimList().contains(testSim));
     }
 
+    /**
+     * Tests the getName method.
+     * Verifies that the correct location name is returned.
+     */
     @Test
     public void testGetName() {
         assertEquals("Kitchen", homeLocation.getName());
     }
 
+    /**
+     * Tests the setName method.
+     * Verifies that the location name can be updated correctly.
+     */
     @Test
     public void testSetName() {
         homeLocation.setName("Bedroom");
         assertEquals("Bedroom", homeLocation.getName());
     }
 
+    /**
+     * Tests multiple activities in a HomeLocation.
+     * Verifies that multiple activities can be added and retrieved correctly.
+     */
     @Test
     public void testMultipleActivities() {
         Activity activity1 = new Activity("Eat", 30, "Hunger", 20);
@@ -83,6 +107,10 @@ public class LocTest {
         assertTrue(activities.contains(activity2));
     }
 
+    /**
+     * Tests multiple Sims in a HomeLocation.
+     * Verifies that multiple Sims can be added and retrieved correctly.
+     */
     @Test
     public void testMultipleSims() {
         // Create another Sim
