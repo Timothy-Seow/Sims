@@ -18,26 +18,20 @@ public class OutsideLocationTest {
 
     @Before
     public void setUp() {
-        testOutsideLocation = new OutsideLocation("Park", "Sunny", "None");
+        testOutsideLocation = new OutsideLocation("Park", "None");
 
         // Create a test Sim
         newHome = SimFactory.defaultHome("test");
-        it = new Career("Developer", "IT", 2000);
+        it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
     @Test
     public void testConstructor() {
         assertEquals("Park", testOutsideLocation.getName());
-        assertEquals("Sunny", testOutsideLocation.getComparison());
         assertEquals("None", testOutsideLocation.getRequirement());
         assertNotNull(testOutsideLocation.getLocSimList());
         assertTrue(testOutsideLocation.getLocSimList().isEmpty());
-    }
-
-    @Test
-    public void testGetComparison() {
-        assertEquals("Sunny", testOutsideLocation.getComparison());
     }
 
     @Test
@@ -48,7 +42,7 @@ public class OutsideLocationTest {
     @Test
     public void testMoveTo() {
         // Create initial location for sim
-        OutsideLocation initialLocation = new OutsideLocation("Street", "Rainy", "Umbrella");
+        OutsideLocation initialLocation = new OutsideLocation("Street", "Umbrella");
         testSim.setCurrentLocation(initialLocation);
         initialLocation.addSim(testSim);
 
@@ -88,24 +82,21 @@ public class OutsideLocationTest {
     }
 
     @Test
-    public void testDifferentWeatherConditions() {
-        OutsideLocation beach = new OutsideLocation("Beach", "Hot", "Sunscreen");
-        OutsideLocation mountain = new OutsideLocation("Mountain", "Cold", "Jacket");
+    public void testDifferentRequirements() {
+        OutsideLocation beach = new OutsideLocation("Beach", "Sunscreen");
+        OutsideLocation mountain = new OutsideLocation("Mountain", "Jacket");
 
-        assertEquals("Hot", beach.getComparison());
         assertEquals("Sunscreen", beach.getRequirement());
-
-        assertEquals("Cold", mountain.getComparison());
         assertEquals("Jacket", mountain.getRequirement());
     }
 
     @Test
     public void testMoveMultipleSims() {
-        OutsideLocation sourceLocation = new OutsideLocation("Home", "Indoors", "None");
+        OutsideLocation sourceLocation = new OutsideLocation("Home", "None");
 
         // Create another Sim
         Home otherHome = SimFactory.defaultHome("other");
-        Career artist = new Career("Artist", "Art", 1500);
+        Career artist = new Career("Art", 1500);
         Sim otherSim = SimFactory.createSim("other", 1, 30, otherHome, artist);
 
         // Add sims to source location

@@ -25,7 +25,7 @@ public class HomeTest {
 
         // Create a test Sim
         Home newHome = SimFactory.defaultHome("test");
-        Career it = new Career("Developer", "IT", 2000);
+        Career it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 

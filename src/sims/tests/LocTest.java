@@ -1,6 +1,5 @@
 package sims.tests;
 
-import sims.world.Loc;
 import sims.world.Home;
 import sims.world.HomeLocation;
 import sims.actions.Activity;
@@ -29,7 +28,7 @@ public class LocTest {
 
         // Create a test Sim
         Home newHome = SimFactory.defaultHome("test");
-        Career it = new Career("Developer", "IT", 2000);
+        Career it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
@@ -88,7 +87,7 @@ public class LocTest {
     public void testMultipleSims() {
         // Create another Sim
         Home otherHome = SimFactory.defaultHome("other");
-        Career artist = new Career("Artist", "Art", 1500);
+        Career artist = new Career("Art", 1500);
         Sim otherSim = SimFactory.createSim("other", 1, 30, otherHome, artist);
 
         homeLocation.getHome().addSim(testSim);

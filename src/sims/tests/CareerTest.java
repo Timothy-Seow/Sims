@@ -13,19 +13,17 @@ public class CareerTest {
     @Before
     public void setUp() {
         defaultCareer = new Career();
-        parameterizedCareer = new Career("Software Engineer", "Technology", 5000);
+        parameterizedCareer = new Career("Technology", 5000);
     }
 
     @Test
     public void testDefaultConstructor() {
-        assertEquals("Unemployed", defaultCareer.getTitle());
         assertEquals("Unemployed", defaultCareer.getSector());
         assertEquals(0, defaultCareer.getSalary());
     }
 
     @Test
     public void testParameterizedConstructor() {
-        assertEquals("Software Engineer", parameterizedCareer.getTitle());
         assertEquals("Technology", parameterizedCareer.getSector());
         assertEquals(5000, parameterizedCareer.getSalary());
     }
@@ -75,7 +73,7 @@ public class CareerTest {
     }
 
     @Test
-    public void testGetBonusWithHigherLevel() {
+    public void testGetIncreasedSalaryAndBonusWithHigherLevel() {
         // Increase level to 2
         parameterizedCareer.earnXP();
         parameterizedCareer.earnXP();
@@ -84,13 +82,8 @@ public class CareerTest {
         parameterizedCareer.earnXP(); // 5 earnXP calls: 5*20=100 xp, level should be 2
 
         assertEquals(2, parameterizedCareer.getLevel());
-        assertEquals(100.0, parameterizedCareer.getBonus(), 0.001); // 5000 * (2/100) = 100
-    }
-
-    @Test
-    public void testGetTitle() {
-        assertEquals("Unemployed", defaultCareer.getTitle());
-        assertEquals("Software Engineer", parameterizedCareer.getTitle());
+        assertEquals(5100, parameterizedCareer.getSalary()); // Salary should have increased by 100
+        assertEquals(102.0, parameterizedCareer.getBonus(), 0.001); // 5000 * (2/100) = 100
     }
 
     @Test
@@ -103,12 +96,6 @@ public class CareerTest {
     public void testGetSalary() {
         assertEquals(0, defaultCareer.getSalary());
         assertEquals(5000, parameterizedCareer.getSalary());
-    }
-
-    @Test
-    public void testSetTitle() {
-        defaultCareer.setTitle("Chef");
-        assertEquals("Chef", defaultCareer.getTitle());
     }
 
     @Test

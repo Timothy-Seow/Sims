@@ -24,7 +24,7 @@ public class ActivityTest {
 
         // Create a test Sim
         Home newHome = SimFactory.defaultHome("test");
-        Career it = new Career("Developer", "IT", 2000);
+        Career it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
     }
 
@@ -78,13 +78,13 @@ public class ActivityTest {
 
     @Test
     public void testPerformActivity() {
-        // Initial hunger value should be 80 (default)
-        assertEquals(80.0, testSim.getNeeds().get("Hunger").getValue(), 0.001);
+        // Get Initial hunger value
+        double initialHunger = testSim.getNeeds().get("Hunger").getValue();
 
-        // Perform eating activity (should increase hunger by 20)
+        // Perform eating activity (should increase hunger by 25: 20 + 5 for skill level 1)
         eatNoCost.performActivity(testSim);
 
-        // Hunger should now be 100 (80 + 20, but capped at 100)
-        assertEquals(100.0, testSim.getNeeds().get("Hunger").getValue(), 0.001);
+        // Hunger should now be 100 (80 + 25, capped at 100)
+        assertEquals(Math.min(100.0, initialHunger + 25.0), testSim.getNeeds().get("Hunger").getValue(), 0.001);
     }
 }

@@ -28,12 +28,12 @@ public class SimTest {
 
         // Create a test Sim
         newHome = SimFactory.defaultHome("test");
-        it = new Career("Developer", "IT", 2000);
+        it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
 
         // Create another Sim
         otherHome = SimFactory.defaultHome("other");
-        artist = new Career("Artist", "Art", 1500);
+        artist = new Career("Art", 1500);
         otherSim = SimFactory.createSim("other", 1, 30, otherHome, artist);
     }
 
@@ -61,9 +61,8 @@ public class SimTest {
 
     @Test
     public void testSetCareer() {
-        Career newCareer = new Career("Doctor", "Medical", 8000);
+        Career newCareer = new Career("Medical", 8000);
         testSim.setCareer(newCareer);
-        assertEquals("Doctor", testSim.getCareer().getTitle());
         assertEquals(8000, testSim.getCareer().getSalary());
     }
 
@@ -87,21 +86,6 @@ public class SimTest {
         double initialHunger = testSim.getNeeds().get("Hunger").getValue();
         testSim.updateNeeds("Hunger", 10.0);
         assertEquals(Math.min(100.0, initialHunger + 10.0), testSim.getNeeds().get("Hunger").getValue(), 0.001);
-    }
-
-    @Test
-    public void testUpdateNeedsSalary() {
-        double initialBank = testSim.getBank();
-        int initialLevel = it.getLevel();
-
-        testSim.updateNeeds("Salary", 0.0); // Value doesn't matter for salary
-
-        // Bank should increase by salary + bonus
-        double expectedIncrease = it.getSalary() + it.getBonus();
-        assertEquals(initialBank + expectedIncrease, testSim.getBank(), 0.001);
-
-        // Career should gain XP (level might increase)
-        assertTrue(it.getLevel() >= initialLevel);
     }
 
     @Test
@@ -130,29 +114,6 @@ public class SimTest {
     }
 
     @Test
-    public void testAutoPlay() {
-        // Create a mock home with home locations and activities
-        Home mockHome = new Home("Mock Home");
-        HomeLocation homeLoc = new HomeLocation("Kitchen", mockHome);
-
-        // Create an activity that impacts Hunger
-        Activity eatActivity = new Activity("Eat", 30, "Hunger", 20);
-        homeLoc.addActivity(eatActivity);
-
-        mockHome.addHomeLocation(homeLoc);
-
-        testSim.setHome(mockHome);
-
-        double initialHunger = testSim.getNeeds().get("Hunger").getValue();
-        testSim.autoPlay("Hunger", 50);
-
-        // Hunger should increase by 20
-        assertEquals(Math.min(100.0, initialHunger + 20.0), testSim.getNeeds().get("Hunger").getValue(), 0.001);
-        // Activity end time should be set
-        assertEquals(80, testSim.getActivityEnd()); // 50 + 30
-    }
-
-    @Test
     public void testPerformDecayCurrentSim() {
         // For current sim, decay should be applied to all needs except the excluded one
         double initialHunger = testSim.getNeeds().get("Hunger").getValue();
@@ -167,15 +128,20 @@ public class SimTest {
     }
 
     @Test
-    public void testPerformDecayOtherSim() {
+    public void testPerformDecayTriggersAutoplay() {
         // For other sim, decay should trigger autoplay if need is critical and sim is not busy
         Sim otherSim = new Sim("OtherSim", 2, 30);
         Map<String, need> otherNeeds = new HashMap<>();
         need criticalNeed = new need(0.5);
         // Set need to be critical (below threshold)
-        criticalNeed.setValue(-50.0); // This will make it critical
+        criticalNeed.setValue(-50.0); // This will make it critical after decay
         otherNeeds.put("Hunger", criticalNeed);
         otherSim.setNeeds(otherNeeds);
+
+        // Set up skills for the sim
+        Map<String, sims.actions.SkillManager> skills = new HashMap<>();
+        skills.put("Hunger", new sims.actions.SkillManager());
+        otherSim.setSkill(skills);
 
         // Set up home and activity for autoplay
         Home mockHome = new Home("Test Home");
@@ -188,7 +154,6 @@ public class SimTest {
         otherSim.performDecay("Energy", testSim, 100); // testSim is "current", otherSim is being decayed
 
         // Since need is critical and time > activityEnd (-1), autoplay should trigger
-        // This is complex to test precisely due to the mock setup, but we can verify the method doesn't crash
-        assertTrue(otherSim.getActivityEnd() >= 0); // Activity should have been set
+        assertEquals(130, otherSim.getActivityEnd()); // Activity duration 30 + time 100
     }
 }

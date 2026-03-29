@@ -24,12 +24,12 @@ public class RelationshipTest {
     public void setUp() {
         // Create a test Sim
         newHome = SimFactory.defaultHome("test");
-        it = new Career("Developer", "IT", 2000);
+        it = new Career("IT", 2000);
         testSim = SimFactory.createSim("test", 0, 25, newHome, it);
 
         // Create another Sim
         otherHome = SimFactory.defaultHome("other");
-        artist = new Career("Artist", "Art", 1500);
+        artist = new Career("Art", 1500);
         otherSim = SimFactory.createSim("other", 1, 30, otherHome, artist);
 
         // Set up relationship
