@@ -14,7 +14,7 @@ import java.util.List;
  * <p>This class manages the relationship between a home and its sub-locations,
  * and defines how Sims move into the home.</p>
  */
-public class Home extends Loc {
+public class Home extends Loc implements Location{
     /** The list of sub-locations (e.g., rooms) that belong to this home. */
     private List<HomeLocation> homeLocation = new ArrayList<>();
 

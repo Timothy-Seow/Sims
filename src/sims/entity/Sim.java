@@ -1,6 +1,7 @@
 package sims.entity;
 
 import sims.actions.Activity;
+import sims.actions.SkillManager;
 import sims.career.Career;
 import sims.needs.need;
 import sims.world.Home;
@@ -9,7 +10,6 @@ import sims.world.Loc;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Represents a Sim character in the Sims world.
@@ -52,6 +52,60 @@ public class Sim {
     /** The relationships this Sim has with other Sims, keyed by UUID. */
     private Map<Integer, Relationship> relationshipMap = new HashMap<>();
 
+
+    /**
+     * A mapping of skill categories to their corresponding {@link SkillManager}.
+     * <p>
+     * This map tracks the Sim’s progression and proficiency in different
+     * skill-related areas that correspond to their needs. Each key is a
+     * string representing a need or category (e.g., Hunger, Hygiene, Energy,
+     * Bladder, Fun, Social), and each value is a {@link SkillManager} instance
+     * responsible for managing skill growth and decay in that category.
+     * </p>
+     *
+     * <h3>Example Entries:</h3>
+     * <ul>
+     *   <li>"Hunger" → SkillManager for food-related skills</li>
+     *   <li>"Energy" → SkillManager for rest and stamina-related skills</li>
+     *   <li>"Social" → SkillManager for communication and relationship skills</li>
+     * </ul>
+     *
+     * <p>
+     * This field ensures that each Sim has a structured way to track and
+     * improve their abilities across all primary need categories, supporting
+     * gameplay mechanics like activities, careers, and upgrades.
+     * </p>
+     */
+    private Map<String, SkillManager> skillMap = new HashMap<>();
+
+    /**
+     * Assigns a skill map to the Sim.
+     * <p>
+     * This method replaces the Sim’s current {@code skillMap} with the provided
+     * mapping of skill categories to their corresponding {@link SkillManager}.
+     * Each entry in the map represents a skill domain (e.g., Hunger, Hygiene,
+     * Energy, Bladder, Fun, Social) and is managed by its own {@link SkillManager}
+     * instance.
+     * </p>
+     *
+     * <h3>Usage:</h3>
+     * <pre>
+     * Map<String, SkillManager> skills = SimFactory.createSkills();
+     * sim.setSkill(skills);
+     * </pre>
+     *
+     * <p>
+     * This ensures that the Sim has a structured skill system in place,
+     * allowing activities, careers, and upgrades to interact with and
+     * improve the Sim’s abilities across different need categories.
+     * </p>
+     *
+     * @param skillMap a mapping of skill categories to their {@link SkillManager} objects
+     */
+    public void setSkill(Map<String, SkillManager> skillMap)
+    {
+        this.skillMap = skillMap;
+    }
 
     /**
      * Constructs a new {@code Sim} with the specified name, UUID, and age.
@@ -113,6 +167,32 @@ public class Sim {
         bank -= cost;
     }
 
+
+    /**
+     * Increases the Sim’s bank balance by the specified value.
+     * <p>
+     * This method adds the given amount to the Sim’s current {@code bank}
+     * field, representing the Sim’s available funds. It is typically used
+     * when the Sim earns money through activities such as working, selling
+     * items, or receiving rewards.
+     * </p>
+     *
+     * <h3>Usage Example:</h3>
+     * <pre>
+     * sim.addBank(500.0); // Adds 500 to the Sim’s bank balance
+     * </pre>
+     *
+     * <p>
+     * Negative values may also be passed to represent expenses or deductions,
+     * though this should be handled carefully to avoid unintended results.
+     * </p>
+     *
+     * @param value the amount to add to the Sim’s bank balance
+     */
+    public void addBank(double value)
+    {
+        bank += value;
+    }
     /**
      * Adds a relationship to this Sim.
      *
@@ -140,18 +220,7 @@ public class Sim {
      */
     public void updateNeeds(String need, double value) {
         System.out.println(activityEnd);
-        if(need != "Salary")
-        {
             needDict.get(need).setValue(value);
-        }
-        else
-        {
-            System.out.println("Bank previous : " + bank);
-            bank += career.getSalary()+career.getBonus();
-            career.earnXP();
-            System.out.println("Bank after : " + bank);
-        }
-
     }
 
     /**
@@ -219,6 +288,32 @@ public class Sim {
         activityEnd = time + duration;
     }
 
+    /**
+     * Retrieves the mapping of skill names to their corresponding {@link SkillManager} instances.
+     * <p>
+     * This method provides access to the internal skill registry, where each skill
+     * is identified by a {@link String} key (e.g., "Cooking", "Fitness", "Logic")
+     * and managed by a {@link SkillManager} object that tracks its level and XP.
+     * </p>
+     *
+     * <h3>Usage Example:</h3>
+     * <pre>
+     * Map<String, SkillManager> skills = sim.getSkillMap();
+     * SkillManager cookingSkill = skills.get("Cooking");
+     * System.out.println("Cooking level: " + cookingSkill.getLevel());
+     * </pre>
+     *
+     * <p>
+     * The returned map may be empty if no skills have been initialized yet.
+     * It can grow dynamically as new skills are added to the Sim.
+     * </p>
+     *
+     * @return a {@link Map} where keys are skill names and values are {@link SkillManager} objects
+     */
+    public Map<String, SkillManager> getSkillMap()
+    {
+        return skillMap;
+    }
 
     /**
      * Automatically performs an activity that satisfies a given need.

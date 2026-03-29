@@ -16,7 +16,7 @@ import java.util.Map;
  * <p>This class manages upgrades, provides access to Sims present in the parent
  * home, and defines how Sims move into this sub-location.</p>
  */
-public class HomeLocation extends Loc{
+public class HomeLocation extends Loc implements Location{
     /** The list of upgrades applied to this home location. */
     private List<HomeUpgrade> upgradeList = new ArrayList<>();
 
@@ -74,13 +74,13 @@ public class HomeLocation extends Loc{
         return home.getLocSimList();
     }
 
-
     /**
      * Removes a Sim from the parent home and prints the list of Sims
      * before and after removal for debugging purposes.
      *
      * @param sim the {@link Sim} to remove
      */
+    @Override
     public void removeSim(Sim sim)
     {
         for(Sim test : home.getLocSimList())

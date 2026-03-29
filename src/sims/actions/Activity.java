@@ -3,6 +3,7 @@ package sims.actions;
 import sims.entity.Sim;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an activity that a Sim can perform in the Sims world.
@@ -75,15 +76,6 @@ public class Activity {
     }
 
     /**
-     * Placeholder method for awarding experience points (XP) to a Sim
-     * when performing this activity. Currently not implemented.
-     */
-    public void gainXP()
-    {
-
-    }
-
-    /**
      * Returns the need impacted by this activity.
      *
      * @return the impacted need (e.g., Hunger, Energy)
@@ -100,7 +92,20 @@ public class Activity {
      * @param sim the Sim performing the activity
      */
     public void performActivity(Sim sim) {
-        sim.updateNeeds(impactedNeed, value);
+        if(impactedNeed != "Salary") {
+            Map<String, SkillManager> skillmap = sim.getSkillMap();
+            SkillManager skill = skillmap.get(impactedNeed);
+            skill.earnXP();
+            sim.updateNeeds(impactedNeed,  (value + (skill.getLevel() * 5)));
+        }
+        else
+        {
+            System.out.println("Bank previous : " + sim.getBank());
+            sim.addBank(sim.getCareer().getSalary()+sim.getCareer().getBonus());
+            sim.getCareer().earnXP();
+            System.out.println("Bank after : " + sim.getBank());
+        }
+
     }
 
 
