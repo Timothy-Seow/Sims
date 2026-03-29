@@ -9,10 +9,7 @@ import sims.world.Home;
 import sims.world.HomeLocation;
 import sims.world.HomeUpgrade;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A utility factory class for creating and initializing Sims and their environments.
@@ -358,13 +355,14 @@ public class SimFactory {
      */
     public static Map<String, need> createNeeds ()
     {
+        Random rand = new Random();
         HashMap<String, need> needDict = new HashMap<>();
-        needDict.put("Hunger", new need(0.2));
-        needDict.put("Hygiene", new need(0.01));
-        needDict.put("Energy", new need(0.3));
-        needDict.put("Bladder", new need(0.02));
-        needDict.put("Fun", new need(0.005));
-        needDict.put("Social", new need(0.003));
+        needDict.put("Hunger", new need(rand.nextInt(51) + 50,0.2, 30));
+        needDict.put("Hygiene", new need(rand.nextInt(51) + 50, 0.01, 30));
+        needDict.put("Energy", new need(rand.nextInt(51) + 50,0.3, 30));
+        needDict.put("Bladder", new need(rand.nextInt(51) + 50,0.02, 30));
+        needDict.put("Fun", new need(rand.nextInt(51) + 50,0.005, 30));
+        needDict.put("Social", new need(rand.nextInt(51) + 50,0.003, 30));
         return needDict;
     }
 }
