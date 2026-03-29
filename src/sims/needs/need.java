@@ -54,7 +54,7 @@ public class need {
      * @param decayRate  the rate at which the need decays
      * @param threshold  the threshold below which the need is critical
      */
-    public need(int value, int decayRate, double threshold)
+    public need(int value, double decayRate, double threshold)
     {
         this.value = value;
         this.decayRate = decayRate;
