@@ -18,6 +18,10 @@ import java.util.Map;
 
 public class SimFactoryTest {
 
+    /**
+     * Tests the defaultGame method.
+     * Verifies that it creates exactly 7 Sims with correct names, UUIDs, ages, careers, salaries, and homes.
+     */
     @Test
     public void testDefaultGame() {
         List<Sim> sims = SimFactory.defaultGame();
@@ -59,6 +63,11 @@ public class SimFactoryTest {
         assertEquals(4200, eliyaz.getCareer().getSalary());
     }
 
+    /**
+     * Tests the defaultHome method.
+     * Verifies that it creates a home with 4 locations (Bathroom, Living Room, Bedroom, Kitchen),
+     * each with appropriate activities and upgrades.
+     */
     @Test
     public void testDefaultHome() {
         Home home = SimFactory.defaultHome("TestSim");
@@ -160,6 +169,11 @@ public class SimFactoryTest {
         assertTrue(hasUseToilet);
     }
 
+    /**
+     * Tests the createSim method.
+     * Verifies that a Sim is created with the specified name, UUID, age, home, and career,
+     * and that skills and needs are properly initialized.
+     */
     @Test
     public void testCreateSim() {
         Career career = new Career("TestCareer", 3000);
@@ -179,6 +193,11 @@ public class SimFactoryTest {
         assertNotNull(sim.getNeeds());
     }
 
+    /**
+     * Tests the createSkills method.
+     * Verifies that it creates a map with 6 skills (Hunger, Hygiene, Energy, Bladder, Fun, Social),
+     * each initialized as a SkillManager with default level 1.
+     */
     @Test
     public void testCreateSkills() {
         Map<String, SkillManager> skills = SimFactory.createSkills();
@@ -197,6 +216,11 @@ public class SimFactoryTest {
         }
     }
 
+    /**
+     * Tests the createNeeds method.
+     * Verifies that it creates a map with 6 needs (Hunger, Hygiene, Energy, Bladder, Fun, Social),
+     * each with correct decay rates and initial values between 50 and 100.
+     */
     @Test
     public void testCreateNeeds() {
         Map<String, need> needs = SimFactory.createNeeds();
