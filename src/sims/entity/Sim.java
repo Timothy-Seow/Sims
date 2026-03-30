@@ -330,6 +330,7 @@ public class Sim {
             {
                 if (activity.getImpactedNeed() == need)
                 {
+                    currentLocation.removeSim(this);
                     homeloc.moveTo(this);
                     activity.performActivity(this);
                     activityEnd = time + activity.getDuration();
